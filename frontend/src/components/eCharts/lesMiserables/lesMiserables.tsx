@@ -50,7 +50,7 @@ const LesMiserablesGraph: React.FC = () => {
           animationEasingUpdate: "quinticInOut",
           series: [
             {
-              name: "Les Miserables",
+              name: "V0.0.1",
               type: "graph",
               legendHoverLink: false,
               layout: "force",

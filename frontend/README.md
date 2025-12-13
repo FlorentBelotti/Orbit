@@ -1,3 +1,32 @@
+# Orbit Frontend
+
+Ce projet est une application React visualisant des données avec ECharts.
+
+## Prérequis
+
+- Node.js
+- npm
+
+## Installation
+
+Pour installer les dépendances du projet (React, ECharts, Sass, etc.), exécutez la commande suivante à la racine du dossier `frontend` :
+
+```bash
+npm install
+```
+
+## Démarrage
+
+Pour lancer l'application en mode développement :
+
+```bash
+npm start
+```
+
+L'application sera accessible à l'adresse [http://localhost:3000](http://localhost:3000).
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
