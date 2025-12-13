@@ -53,7 +53,7 @@ const LesMiserablesGraph: React.FC = () => {
               name: "Les Miserables",
               type: "graph",
               legendHoverLink: false,
-              layout: "none",
+              layout: "force",
               data: graph.nodes,
               links: graph.links,
               categories: graph.categories,
