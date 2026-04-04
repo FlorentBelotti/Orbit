@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Space+Grotesk:wght@400;500&display=swap");
+
+:root {
+  color-scheme: dark;
+  --ink-strong: #e3e6ff;
+  --ink: #c2c7f0;
+  --ink-muted: #8890b3;
+  --bg-0: #05040a;
+  --bg-1: #0b0c1a;
+  --bg-2: #141a2c;
+  --accent: #7079c7;
+  --accent-soft: #2b2f4d;
+  --panel: rgba(9, 10, 22, 0.72);
+  --gutter: clamp(24px, 5vw, 72px);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: "Space Grotesk", "Helvetica Neue", sans-serif;
+  background: radial-gradient(
+    circle at top,
+    var(--bg-2),
+    var(--bg-1) 45%,
+    var(--bg-0) 85%
+  );
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.app {
+  position: relative;
+  height: 100%;
+}
+
+.scene-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.scroll-section {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  padding: var(--gutter);
+}
+
+.section-inner {
+  max-width: 520px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--panel), rgba(12, 14, 28, 0.4));
+  border: 1px solid rgba(112, 121, 199, 0.15);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(4, 6, 20, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.section-tag {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+}
+
+.section-inner h1 {
+  font-family: "Cinzel", "Garamond", serif;
+  font-size: clamp(2.2rem, 3vw, 3.4rem);
+  font-weight: 600;
+  color: var(--ink-strong);
+  margin-bottom: 14px;
+}
+
+.section-hint {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.scroll-section:nth-child(2n) .section-inner {
+  margin-left: auto;
+}
+
+@media (max-width: 720px) {
+  .section-inner {
+    width: 100%;
+    padding: 22px 20px;
+  }
+
+  .section-tag {
+    letter-spacing: 0.2em;
+  }
+}
