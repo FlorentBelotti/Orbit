@@ -4,7 +4,7 @@ const view3Content = {
   ...defaultContent,
   content: "Seneca's pledge",
   labelPlacement: {
-    layer: "behind",
+    layer: "front",
     x: 70,
     y: 30,
   },

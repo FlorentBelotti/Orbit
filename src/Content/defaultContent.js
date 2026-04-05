@@ -1,6 +1,10 @@
 const defaultContent = {
   content: "",
   body: "",
+  labelMotion: {
+    entrance: "bottom",
+    exit: "top",
+  },
   labelPlacement: {
     layer: "front",
     x: 5,

@@ -11,7 +11,7 @@ import {
   WebGLRenderer,
 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import type { SceneConfig, Viewpoint } from "./sceneTypes";
+import type { EasingName, SceneConfig, Viewpoint } from "./sceneTypes";
 import { animateCameraTransition } from "./cameraTransition";
 
 export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
@@ -52,12 +52,42 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
   };
 
   let activeTransition: { stop: () => void } | null = null;
+  let activeLightTransition: { stop: () => void } | null = null;
   let currentIndex = -1;
 
   const renderFrame = () => {
     camera.position.copy(rig.position);
     camera.lookAt(rig.target);
     renderer.render(scene, camera);
+  };
+
+  const resolveLightDirection = (view: Viewpoint) => {
+    const preset = view.lightPreset;
+    const presetDirection = preset ? config.lighting.presets?.[preset] : null;
+    return presetDirection ?? config.lighting.key.direction;
+  };
+
+  const setLightImmediate = (view: Viewpoint) => {
+    const direction = resolveLightDirection(view);
+    keyLight.position.set(...direction);
+  };
+
+  const animateLight = (view: Viewpoint) => {
+    const direction = resolveLightDirection(view);
+    activeLightTransition?.stop();
+    activeLightTransition = animateVectorTransition({
+      from: keyLight.position.clone(),
+      to: new Vector3(...direction),
+      durationMs: config.transition.durationMs,
+      easing: config.transition.easing,
+      onUpdate: (pos) => {
+        keyLight.position.copy(pos);
+        renderFrame();
+      },
+      onComplete: () => {
+        activeLightTransition = null;
+      },
+    });
   };
 
   const applyView = (view: Viewpoint) => {
@@ -76,11 +106,14 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
     activeTransition = null;
 
     if (options?.immediate) {
+      setLightImmediate(view);
       applyView(view);
       renderFrame();
       currentIndex = index;
       return;
     }
+
+    animateLight(view);
 
     const fromPos = rig.position.clone();
     const fromTarget = rig.target.clone();
@@ -124,6 +157,7 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
 
   const dispose = () => {
     activeTransition?.stop();
+    activeLightTransition?.stop();
     renderer.dispose();
   };
 
@@ -153,6 +187,67 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
     setViewByIndex,
     resize,
     dispose,
+  };
+}
+
+function animateVectorTransition(options: {
+  from: Vector3;
+  to: Vector3;
+  durationMs: number;
+  easing: EasingName;
+  onUpdate: (pos: Vector3) => void;
+  onComplete?: () => void;
+}) {
+  const { from, to, durationMs, easing, onUpdate, onComplete } = options;
+
+  if (durationMs <= 0) {
+    onUpdate(to);
+    onComplete?.();
+    return { stop: () => undefined };
+  }
+
+  const easingMap: Record<EasingName, (t: number) => number> = {
+    linear: (t) => t,
+    easeInOutCubic: (t) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+    easeOutCubic: (t) => 1 - Math.pow(1 - t, 3),
+  };
+
+  const easingFn = easingMap[easing] ?? easingMap.linear;
+  const start = performance.now();
+  const origin = from.clone();
+  const destination = to.clone();
+  const temp = new Vector3();
+
+  let frameId = 0;
+  let stopped = false;
+
+  const step = (now: number) => {
+    if (stopped) {
+      return;
+    }
+
+    const elapsed = now - start;
+    const t = Math.min(1, elapsed / durationMs);
+    const eased = easingFn(t);
+
+    temp.lerpVectors(origin, destination, eased);
+    onUpdate(temp);
+
+    if (t < 1) {
+      frameId = requestAnimationFrame(step);
+    } else {
+      onComplete?.();
+    }
+  };
+
+  frameId = requestAnimationFrame(step);
+
+  return {
+    stop: () => {
+      stopped = true;
+      cancelAnimationFrame(frameId);
+    },
   };
 }
 

@@ -8,6 +8,7 @@ import type {
 type ContentOverlayProps = {
   item: LabelContent;
   viewIndex: number;
+  isExiting?: boolean;
 };
 
 const defaultPlacement: LabelPlacement = {
@@ -23,7 +24,11 @@ const defaultStyle: LabelStyle = {
   showBody: true,
 };
 
-export function ContentOverlay({ item, viewIndex }: ContentOverlayProps) {
+export function ContentOverlay({
+  item,
+  viewIndex,
+  isExiting = false,
+}: ContentOverlayProps) {
   const placement = item.labelPlacement ?? defaultPlacement;
   const style = { ...defaultStyle, ...item.labelStyle };
   const variant = style.variant ?? "glass";
@@ -36,6 +41,15 @@ export function ContentOverlay({ item, viewIndex }: ContentOverlayProps) {
   const capsuleWidth = style.capsuleWidth ?? style.maxWidth;
   const bodyText =
     item.body ?? "Scroll to shift the camera to the next point of view.";
+  const entrance = item.labelMotion?.entrance ?? "none";
+  const exit = item.labelMotion?.exit ?? "none";
+  const motionClass = isExiting
+    ? exit === "none"
+      ? ""
+      : `label-card--exit-${exit}`
+    : entrance === "none"
+      ? ""
+      : `label-card--enter-${entrance}`;
 
   const layerStyle = {
     "--label-x": `${placement.x}%`,
@@ -63,7 +77,12 @@ export function ContentOverlay({ item, viewIndex }: ContentOverlayProps) {
       style={layerStyle}
       aria-hidden="true"
     >
-      <div className={`label-card label-card--${variant}`} style={cardStyle}>
+      <div
+        className={["label-card", `label-card--${variant}`, motionClass]
+          .filter(Boolean)
+          .join(" ")}
+        style={cardStyle}
+      >
         {showSubtitle ? (
           <p className="label-tag">
             View {String(viewIndex + 1).padStart(2, "0")}

@@ -31,6 +31,11 @@ const sceneConfig = {
       intensity: 2.4,
       direction: [2.2, 3.4, 1.2],
     },
+    presets: {
+      lightScene: [0.0, 10, 30],
+      lightLeftScene: [20, 10, 30],
+      lightRightScene: [-20, 10, 30],
+    },
   },
   transition: {
     durationMs: 1200,
@@ -39,16 +44,19 @@ const sceneConfig = {
   views: [
     {
       contents: [view1Title],
+      lightPreset: "lightScene",
       position: [30, 0, 15],
       target: [-2, 3, 0],
     },
     {
       contents: [view2Title, view2Content],
+      lightPreset: "lightLeftScene",
       position: [5, 5, 10],
       target: [-3, 3.5, 0.0],
     },
     {
       contents: [view3Content],
+      lightPreset: "lightRightScene",
       position: [5, 5, 10],
       target: [7, 3.5, 0.0],
     },

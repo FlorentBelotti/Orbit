@@ -31,10 +31,12 @@ Edit only `src/config.js` to add or tweak viewpoints, lighting, or transitions. 
 - Add multiple labels per view: push more entries into `contents`.
 - Provide custom body text per label with `body` inside a `contents` entry.
 - Change lighting: update `lighting.ambient` or `lighting.key`.
+- Per-view lighting: set `lighting.presets` and choose a `lightPreset` per view.
 - Adjust transitions: edit `transition.durationMs` or `transition.easing`.
 - Fit the model: tweak `model.scale`, `model.rotation`, and `model.position`.
 - Move labels: set `labelPlacement` with `{ layer: "front" | "behind", x, y }` where `x` and `y` are viewport percentages.
 - Restyle labels: set `labelStyle` with size and visibility controls like `titleSize`, `subtitleSize`, `bodySize`, `capsuleWidth`, `capsulePadding`, `showTitle`, `showSubtitle`, `showBody`.
+- Animate labels: set `labelMotion.entrance` and `labelMotion.exit` to `top`, `bottom`, `left`, `right`, or `none`.
 - Use presets: import `defaultContent` and override just the fields you need for each content entry.
 - Name content entries consistently (example files: `View_1_title`, `View_1_content`).
 - Control label colors with `titleColor`, `subtitleColor`, `bodyColor`, `background` (capsule color), `borderColor`, and `shadowColor`.

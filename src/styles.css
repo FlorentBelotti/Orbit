@@ -92,6 +92,95 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.label-card--enter-top,
+.label-card--enter-bottom,
+.label-card--enter-left,
+.label-card--enter-right {
+  animation: label-enter 0.65s ease both;
+}
+
+.label-card--exit-top,
+.label-card--exit-bottom,
+.label-card--exit-left,
+.label-card--exit-right {
+  animation: label-exit 0.45s ease both;
+}
+
+.label-card--enter-top {
+  --label-enter-x: 0px;
+  --label-enter-y: -26px;
+}
+
+.label-card--enter-bottom {
+  --label-enter-x: 0px;
+  --label-enter-y: 26px;
+}
+
+.label-card--enter-left {
+  --label-enter-x: -26px;
+  --label-enter-y: 0px;
+}
+
+.label-card--enter-right {
+  --label-enter-x: 26px;
+  --label-enter-y: 0px;
+}
+
+.label-card--exit-top {
+  --label-exit-x: 0px;
+  --label-exit-y: -22px;
+}
+
+.label-card--exit-bottom {
+  --label-exit-x: 0px;
+  --label-exit-y: 22px;
+}
+
+.label-card--exit-left {
+  --label-exit-x: -22px;
+  --label-exit-y: 0px;
+}
+
+.label-card--exit-right {
+  --label-exit-x: 22px;
+  --label-exit-y: 0px;
+}
+
+@keyframes label-enter {
+  from {
+    opacity: 0;
+    transform: translate(var(--label-enter-x, 0px), var(--label-enter-y, 0px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes label-exit {
+  from {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--label-exit-x, 0px), var(--label-exit-y, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label-card--enter-top,
+  .label-card--enter-bottom,
+  .label-card--enter-left,
+  .label-card--enter-right,
+  .label-card--exit-top,
+  .label-card--exit-bottom,
+  .label-card--exit-left,
+  .label-card--exit-right {
+    animation: none;
+  }
+}
+
 .label-card--solid {
   backdrop-filter: none;
 }

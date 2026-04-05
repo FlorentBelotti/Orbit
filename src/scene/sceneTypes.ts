@@ -35,15 +35,27 @@ export type LabelStyle = {
   showBody?: boolean;
 };
 
+export type LabelMotionDirection = "none" | "top" | "bottom" | "left" | "right";
+
+export type LabelEntranceDirection = LabelMotionDirection;
+export type LabelExitDirection = LabelMotionDirection;
+
+export type LabelMotion = {
+  entrance?: LabelEntranceDirection;
+  exit?: LabelExitDirection;
+};
+
 export type LabelContent = {
   content: string;
   body?: string;
+  labelMotion?: LabelMotion;
   labelPlacement?: LabelPlacement;
   labelStyle?: LabelStyle;
 };
 
 export type Viewpoint = {
   contents: LabelContent[];
+  lightPreset?: LightPresetName;
   position: Vec3;
   target: Vec3;
 };
@@ -58,7 +70,10 @@ export type LightingConfig = {
     intensity: number;
     direction: Vec3;
   };
+  presets?: Record<LightPresetName, Vec3>;
 };
+
+export type LightPresetName = "behind" | "up" | "front";
 
 export type TransitionConfig = {
   durationMs: number;
