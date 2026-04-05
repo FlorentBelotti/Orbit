@@ -47,15 +47,58 @@ export default function App() {
       },
     );
 
-    const handleResize = () => {
-      scene.resize();
+    const closingSection = scroll.querySelector<HTMLElement>(
+      "[data-closing-section]",
+    );
+    const closingPanel = scroll.querySelector<HTMLElement>(
+      "[data-closing-panel]",
+    );
+
+    let rafId = 0;
+    const updateClosingPanel = () => {
+      if (!closingSection || !closingPanel) {
+        document.documentElement.style.setProperty("--closing-progress", "0");
+        return;
+      }
+
+      const viewHeight = scroll.clientHeight || 1;
+      const start = closingSection.offsetTop - viewHeight;
+      const end = closingSection.offsetTop;
+      const raw = (scroll.scrollTop - start) / (end - start);
+      const progress = Math.min(1, Math.max(0, raw));
+      closingPanel.style.setProperty("--closing-progress", `${progress}`);
+      document.documentElement.style.setProperty(
+        "--closing-progress",
+        `${progress}`,
+      );
     };
 
+    const handleScroll = () => {
+      if (rafId) {
+        return;
+      }
+
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        updateClosingPanel();
+      });
+    };
+
+    const handleResize = () => {
+      scene.resize();
+      updateClosingPanel();
+    };
+
+    scroll.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
-    requestAnimationFrame(() => scene.resize());
+    requestAnimationFrame(() => {
+      scene.resize();
+      updateClosingPanel();
+    });
 
     return () => {
       stopObserving();
+      scroll.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       scene.dispose();
     };

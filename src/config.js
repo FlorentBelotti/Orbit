@@ -74,7 +74,7 @@ const sceneConfig = {
     //   target: [-25, 3.5, 0.0],
     // },
     {
-      contents: [view3Content],
+      // contents: [view3Content],
       lightPreset: "lightRightScene",
       position: [5, 5, 10],
       target: [7.2, 3.5, 0.0],
