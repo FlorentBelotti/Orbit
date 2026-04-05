@@ -48,6 +48,7 @@ Edit only `src/config.js` to add or tweak viewpoints, lighting, or transitions. 
 - `src/scene/createScene.ts`: Three.js setup, model loading, and render calls.
 - `src/scene/scrollViews.ts`: Scroll section observer.
 - `src/scene/cameraTransition.ts`: Camera tweening.
+- `src/Content/Panel/panelContent.ts`: closing panel copy and structure.
 - `src/styles/colors.css`: color tokens used across the app.
 - `src/styles/effects.css`: gradients, shadows, and other visual effects.
 - `src/styles/fonts.css`: font imports and font-family tokens.
