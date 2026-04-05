@@ -19,13 +19,13 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
     canvas,
     antialias: config.renderer.antialias,
     powerPreference: "high-performance",
+    alpha: true,
   });
 
   renderer.outputColorSpace = SRGBColorSpace;
-  renderer.setClearColor(new Color(config.background), 1);
+  renderer.setClearColor(new Color(config.background), 0);
 
   const scene = new Scene();
-  scene.background = new Color(config.background);
 
   const camera = new PerspectiveCamera(
     config.camera.fov,

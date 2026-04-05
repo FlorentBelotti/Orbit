@@ -1,3 +1,8 @@
+import view1Title from "./Content/config/View_1_title";
+import view2Content from "./Content/config/View_2_content";
+import view2Title from "./Content/config/View_2_title";
+import view3Content from "./Content/config/View_3_content";
+
 const sceneConfig = {
   background: "#070812",
   renderer: {
@@ -33,17 +38,17 @@ const sceneConfig = {
   },
   views: [
     {
-      label: "The Scene",
+      contents: [view1Title],
       position: [30, 0, 15],
       target: [-2, 3, 0],
     },
     {
-      label: "Nero's contempt",
+      contents: [view2Title, view2Content],
       position: [5, 5, 10],
       target: [-3, 3.5, 0.0],
     },
     {
-      label: "Seneca's pledge",
+      contents: [view3Content],
       position: [5, 5, 10],
       target: [7, 3.5, 0.0],
     },

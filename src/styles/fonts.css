@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Space+Grotesk:wght@400;500&display=swap");
+
+:root {
+  --font-body: "Space Grotesk", "Helvetica Neue", sans-serif;
+  --font-display: "Cinzel", "Garamond", serif;
+  --font-size-xxl: clamp(3rem, 6vw, 6rem);
+  --font-size-xl: clamp(2.2rem, 3vw, 3.4rem);
+  --font-size-lg: 1.25rem;
+  --font-size-md: 1rem;
+  --font-size-sm: 0.85rem;
+}

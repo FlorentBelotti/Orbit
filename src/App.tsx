@@ -1,5 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import sceneConfig from "./config.js";
+import { ContentOverlay } from "./components/ContentOverlay";
+import { ScrollSections } from "./components/ScrollSections";
 import { createScene } from "./scene/createScene";
 import { createScrollViewObserver } from "./scene/scrollViews";
 import type { SceneConfig } from "./scene/sceneTypes";
@@ -10,6 +12,7 @@ export default function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const sceneRef = useRef<ReturnType<typeof createScene> | null>(null);
+  const [activeViewIndex, setActiveViewIndex] = useState(0);
 
   const views = config.views;
 
@@ -36,6 +39,7 @@ export default function App() {
       scroll,
       sections,
       (index) => {
+        setActiveViewIndex(index);
         scene.setViewByIndex(index);
       },
     );
@@ -54,28 +58,24 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.style.setProperty("--scene-bg", config.background);
+  }, []);
+
+  const activeView = views[activeViewIndex] ?? views[0];
+  const activeContents = activeView?.contents ?? [];
+
   return (
     <div className="app">
       <canvas ref={canvasRef} className="scene-canvas" aria-hidden="true" />
-      <div ref={scrollRef} className="scroll">
-        {views.map((view, index) => (
-          <section
-            key={view.label}
-            className="scroll-section"
-            data-view-index={index}
-          >
-            <div className="section-inner">
-              <p className="section-tag">
-                View {String(index + 1).padStart(2, "0")}
-              </p>
-              <h1>{view.label}</h1>
-              <p className="section-hint">
-                Scroll to shift the camera to the next point of view.
-              </p>
-            </div>
-          </section>
-        ))}
-      </div>
+      {activeContents.map((item, contentIndex) => (
+        <ContentOverlay
+          key={`${activeViewIndex}-${contentIndex}-${item.content}`}
+          item={item}
+          viewIndex={activeViewIndex}
+        />
+      ))}
+      <ScrollSections views={views} scrollRef={scrollRef} />
     </div>
   );
 }

@@ -25,12 +25,19 @@ npm run dev
 
 ## Configuration
 
-Edit only `src/config.js` to add or tweak viewpoints, lighting, or transitions.
+Edit only `src/config.js` to add or tweak viewpoints, lighting, or transitions. A single archetype lives in `src/Content/defaultContent.js`, while view-specific entries live in `src/Content/config`.
 
-- Add a new view: append a new object to `views` with `label`, `position`, and `target`.
+- Add a new view: append a new object to `views` with `contents`, `position`, `target`.
+- Add multiple labels per view: push more entries into `contents`.
+- Provide custom body text per label with `body` inside a `contents` entry.
 - Change lighting: update `lighting.ambient` or `lighting.key`.
 - Adjust transitions: edit `transition.durationMs` or `transition.easing`.
 - Fit the model: tweak `model.scale`, `model.rotation`, and `model.position`.
+- Move labels: set `labelPlacement` with `{ layer: "front" | "behind", x, y }` where `x` and `y` are viewport percentages.
+- Restyle labels: set `labelStyle` with size and visibility controls like `titleSize`, `subtitleSize`, `bodySize`, `capsuleWidth`, `capsulePadding`, `showTitle`, `showSubtitle`, `showBody`.
+- Use presets: import `defaultContent` and override just the fields you need for each content entry.
+- Name content entries consistently (example files: `View_1_title`, `View_1_content`).
+- Control label colors with `titleColor`, `subtitleColor`, `bodyColor`, `background` (capsule color), `borderColor`, and `shadowColor`.
 
 ## Structure
 
@@ -38,3 +45,6 @@ Edit only `src/config.js` to add or tweak viewpoints, lighting, or transitions.
 - `src/scene/createScene.ts`: Three.js setup, model loading, and render calls.
 - `src/scene/scrollViews.ts`: Scroll section observer.
 - `src/scene/cameraTransition.ts`: Camera tweening.
+- `src/styles/colors.css`: color tokens used across the app.
+- `src/styles/effects.css`: gradients, shadows, and other visual effects.
+- `src/styles/fonts.css`: font imports and font-family tokens.

@@ -1,0 +1,27 @@
+:root {
+  color-scheme: dark;
+  --scene-bg: #070812;
+  --ink-strong: #e3e6ff;
+  --ink: #c2c7f0;
+  --ink-muted: #8890b3;
+  --bg-0: var(--scene-bg);
+  --bg-1: #0b0c1a;
+  --bg-2: #141a2c;
+  --accent: #7079c7;
+  --accent-soft: #2b2f4d;
+  --panel: rgba(9, 10, 22, 0.72);
+  --panel-soft: rgba(12, 14, 28, 0.4);
+  --glass-hi: rgba(9, 12, 28, 0.7);
+  --glass-lo: rgba(8, 10, 22, 0.35);
+  --label-title-default: #f0f2ff;
+  --label-title-hero: #eef1ff;
+  --label-subtitle-default: #a2addc;
+  --label-body-default: #cdd4f5;
+  --label-body-soft: #c2c7f0;
+  --label-border-default-color: rgba(112, 121, 199, 0.15);
+  --label-border-strong: rgba(121, 140, 212, 0.45);
+  --label-border-glass: rgba(112, 121, 199, 0.25);
+  --label-shadow-default-color: rgba(4, 6, 20, 0.6);
+  --label-shadow-soft: rgba(7, 10, 24, 0.35);
+  --label-shadow-deep: rgba(4, 6, 18, 0.55);
+}

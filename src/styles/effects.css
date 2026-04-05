@@ -1,0 +1,19 @@
+:root {
+  --app-bg: radial-gradient(
+    circle at top,
+    var(--bg-2),
+    var(--bg-1) 45%,
+    var(--bg-0) 85%
+  );
+  --label-panel: linear-gradient(135deg, var(--panel), var(--panel-soft));
+  --label-glass: linear-gradient(135deg, var(--glass-hi), var(--glass-lo));
+  --label-capsule-bg-default: var(--label-panel);
+  --label-capsule-bg-glass: var(--label-glass);
+  --label-capsule-width-md: 520px;
+  --label-capsule-width-lg: 720px;
+  --label-capsule-width-xxl: 1000px;
+  --label-capsule-padding-md: 28px 32px;
+  --label-capsule-padding-none: 0;
+  --label-border-default: var(--label-border-default-color);
+  --label-shadow-default: var(--label-shadow-default-color);
+}
