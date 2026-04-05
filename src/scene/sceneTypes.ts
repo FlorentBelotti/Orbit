@@ -75,6 +75,20 @@ export type LightingConfig = {
 
 export type LightPresetName = "behind" | "up" | "front";
 
+export type BackgroundParticlesConfig = {
+  enabled: boolean;
+  count: number;
+  color: string;
+  opacity: number;
+  size: number;
+  bounds: Vec3;
+  center: Vec3;
+  drift: {
+    amplitude: number;
+    speed: number;
+  };
+};
+
 export type TransitionConfig = {
   durationMs: number;
   easing: EasingName;
@@ -106,5 +120,6 @@ export type SceneConfig = {
   model: ModelConfig;
   lighting: LightingConfig;
   transition: TransitionConfig;
+  backgroundParticles?: BackgroundParticlesConfig;
   views: Viewpoint[];
 };

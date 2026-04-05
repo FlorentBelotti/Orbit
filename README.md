@@ -33,6 +33,7 @@ Edit only `src/config.js` to add or tweak viewpoints, lighting, or transitions. 
 - Change lighting: update `lighting.ambient` or `lighting.key`.
 - Per-view lighting: set `lighting.presets` and choose a `lightPreset` per view.
 - Adjust transitions: edit `transition.durationMs` or `transition.easing`.
+- Background particles: tweak `backgroundParticles` for star count, color, and drift.
 - Fit the model: tweak `model.scale`, `model.rotation`, and `model.position`.
 - Move labels: set `labelPlacement` with `{ layer: "front" | "behind", x, y }` where `x` and `y` are viewport percentages.
 - Restyle labels: set `labelStyle` with size and visibility controls like `titleSize`, `subtitleSize`, `bodySize`, `capsuleWidth`, `capsulePadding`, `showTitle`, `showSubtitle`, `showBody`.

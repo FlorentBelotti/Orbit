@@ -41,6 +41,19 @@ const sceneConfig = {
     durationMs: 1200,
     easing: "easeInOutCubic",
   },
+  backgroundParticles: {
+    enabled: true,
+    count: 700,
+    color: "#9aa6ff",
+    opacity: 0.5,
+    size: 0.3,
+    bounds: [50, 24, 50],
+    center: [0.0, 4.0, -12.0],
+    drift: {
+      amplitude: 0.25,
+      speed: 0.18,
+    },
+  },
   views: [
     {
       contents: [view1Title],
@@ -52,13 +65,19 @@ const sceneConfig = {
       contents: [view2Title, view2Content],
       lightPreset: "lightLeftScene",
       position: [5, 5, 10],
-      target: [-3, 3.5, 0.0],
+      target: [-4, 3.5, 0.0],
     },
+    // {
+    //   contents: [view2Title, view2Content],
+    //   lightPreset: "lightLeftScene",
+    //   position: [10, 5, 5],
+    //   target: [-25, 3.5, 0.0],
+    // },
     {
       contents: [view3Content],
       lightPreset: "lightRightScene",
       position: [5, 5, 10],
-      target: [7, 3.5, 0.0],
+      target: [7.2, 3.5, 0.0],
     },
   ],
 };
