@@ -1,5 +1,4 @@
 import type { RefObject } from "react";
-import { ClosingPanel } from "../Content/Panel/ClosingPanel";
 import type { Viewpoint } from "../scene/sceneTypes";
 
 type ScrollSectionsProps = {
@@ -17,7 +16,6 @@ export function ScrollSections({ views, scrollRef }: ScrollSectionsProps) {
           data-view-index={index}
         />
       ))}
-      <ClosingPanel />
     </div>
   );
 }

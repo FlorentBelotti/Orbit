@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import sceneConfig from "./config.js";
 import { ContentOverlay } from "./components/ContentOverlay";
+import { Header } from "./components/Header";
 import { ScrollSections } from "./components/ScrollSections";
 import { createScene } from "./scene/createScene";
 import { createScrollViewObserver } from "./scene/scrollViews";
@@ -14,6 +15,7 @@ export default function App() {
   const sceneRef = useRef<ReturnType<typeof createScene> | null>(null);
   const views = config.views;
   const [activeViewIndex, setActiveViewIndex] = useState(0);
+  const [headerVisible, setHeaderVisible] = useState(false);
   const [displayedContents, setDisplayedContents] = useState<
     DisplayedContent[]
   >(() => buildDisplayEntries(views[0]?.contents ?? [], 0));
@@ -47,29 +49,11 @@ export default function App() {
       },
     );
 
-    const closingSection = scroll.querySelector<HTMLElement>(
-      "[data-closing-section]",
-    );
-    const closingPanel = scroll.querySelector<HTMLElement>(
-      "[data-closing-panel]",
-    );
-
     let rafId = 0;
-    const updateClosingPanel = () => {
-      if (!closingSection || !closingPanel) {
-        document.documentElement.style.setProperty("--closing-progress", "0");
-        return;
-      }
-
-      const viewHeight = scroll.clientHeight || 1;
-      const start = closingSection.offsetTop - viewHeight;
-      const end = closingSection.offsetTop;
-      const raw = (scroll.scrollTop - start) / (end - start);
-      const progress = Math.min(1, Math.max(0, raw));
-      closingPanel.style.setProperty("--closing-progress", `${progress}`);
-      document.documentElement.style.setProperty(
-        "--closing-progress",
-        `${progress}`,
+    const updateHeaderVisibility = () => {
+      const shouldShowHeader = scroll.scrollTop > 16;
+      setHeaderVisible((prev) =>
+        prev === shouldShowHeader ? prev : shouldShowHeader,
       );
     };
 
@@ -80,20 +64,20 @@ export default function App() {
 
       rafId = requestAnimationFrame(() => {
         rafId = 0;
-        updateClosingPanel();
+        updateHeaderVisibility();
       });
     };
 
     const handleResize = () => {
       scene.resize();
-      updateClosingPanel();
+      updateHeaderVisibility();
     };
 
     scroll.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
     requestAnimationFrame(() => {
       scene.resize();
-      updateClosingPanel();
+      updateHeaderVisibility();
     });
 
     return () => {
@@ -139,6 +123,12 @@ export default function App() {
 
   return (
     <div className="app">
+      <Header
+        views={views}
+        scrollRef={scrollRef}
+        activeViewIndex={activeViewIndex}
+        isVisible={headerVisible}
+      />
       <canvas ref={canvasRef} className="scene-canvas" aria-hidden="true" />
       {displayedContents.map((entry) => (
         <ContentOverlay
